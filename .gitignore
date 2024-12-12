@@ -1,0 +1,13 @@
+node_modules/
+yarn.lock
+dist/
+.npmrc
+.ts
+.tsbuildinfo.esm
+.tsbuildinfo.cjs
+.tsbuildinfo
+.env
+
+.vscode/
+/*.tgz
+.rollup.cache
