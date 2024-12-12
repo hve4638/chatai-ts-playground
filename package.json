@@ -5,11 +5,11 @@
   "types": "./dist/types",
   "license": "MIT",
   "scripts": {
-    "esm:start": "node ./dist/esm/index.js",
-    "cjs:start": "node ./dist/cjs/index.js",
+    "esm:start": "npm run ts-build-esm && npm node ./dist/esm/index.js",
+    "cjs:start": "npm run ts-build-cjs && node ./dist/cjs/index.js",
     "build": "npm run ts-build-cjs && npm run ts-build-esm",
-    "ts-build-cjs": "tsc --project tsconfig.cjs.json",
-    "ts-build-esm": "tsc --project tsconfig.esm.json"
+    "ts-build-cjs": "tsc --project tsconfig.cjs.json && echo {\"type\":\"commonJS\"} > ./dist/cjs/package.json",
+    "ts-build-esm": "tsc --project tsconfig.esm.json && echo {\"type\":\"module\"} > ./dist/esm/package.json"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

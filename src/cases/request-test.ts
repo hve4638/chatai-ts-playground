@@ -1,16 +1,13 @@
 import ChatAI, {
-    CHAT_ROLE,
-    Models,
-    ModelNames,
-    CHAT_TYPE,
     JSONSchema,
     ChatRole, Chat
-} from './chatAI.js';
+} from '@hve/chatai';
+import Model from '../model';
+import { showChatAIResponse } from '../utils';
 
-
-async function run() {
-    const chatAI = new ChatAI();
-    const data = await chatAI.request({
+async function run(model:Model) {
+    const api = new ChatAI();
+    const data = await api.request({
         message: [
             ChatRole.System([
                 Chat.Text("You are a very busy employee. You are to answer the user's question politely, but very briefly."),
@@ -19,18 +16,15 @@ async function run() {
                 Chat.Text("Tell me about yourself at length."),
             ]),
         ],
-        model: ModelNames.OPENAI_GPT,
-        model_detail: 'gpt-4o',
+        model: model.model,
+        model_detail: model.model_detail,
         secret: {
-            api_key: process.env['API_KEY_GPT']
+            api_key: model.api_key
         },
         max_tokens: 100
     });
     
-    const res = data.response;
-    if (res.ok) {
-        console.log(res.content[0]);
-    }
+    showChatAIResponse(data);
 }
 
 export default run;

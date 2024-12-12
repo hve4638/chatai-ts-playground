@@ -1,21 +1,22 @@
-import * as fs from 'fs';
-import runRequest from './request-test.js';
-import runStreaming from './streaming-test.js';
-import runImage from './image-test.js';
+import { Models, ModelDetails, ChatAIResponse } from '@hve/chatai';
+import Model from './model.js';
+import requestTest from './cases/request-test.js';
+import jsonTest from './cases/json-test.js';
+import streamTest from './cases/stream-test.js';
+import imageTest from './cases/image-test.js';
+import fileTest from './cases/file-test.js';
 
-//fs.readFileSync('C:\\Users\\hve46\\Desktop\\test.txt', 'utf8');
+const models = {
+    'claude' : new Model(Models.CLAUDE, ModelDetails.CLAUDE['claude-3-5-sonnet-20240620'], process.env['API_KEY_CLAUDE']),
+    'gemini' : new Model(Models.GOOGLE_GEMINI, ModelDetails.GOOGLE_GEMINI['gemini-exp-1121'], process.env['API_KEY_GEMINI']),
+    'gpt' : new Model(Models.OPENAI_GPT, ModelDetails.OPENAI_GPT['gpt-4o'], process.env['API_KEY_GPT']),
+} as const;
 
-function readFileAsBase64Sync(filePath) {
-  const data = fs.readFileSync(filePath);
-  return data.toString('base64');
-}
+const image_path = './data/image.png'
 
-// 사용 예시
-//const file_path = 'C:\\Users\\hve46\\Desktop\\mac.png'
-//const file_path = 'C:\\Users\\hve46\\Desktop\\Sprite-0002.webp'
-//const file_path = 'C:\\Users\\hve46\\Desktop\\clipboard_20241209_063938_464.png'
-//const image_url = readFileAsBase64Sync(file_path);
-
-runRequest();
-//runStreaming();
-//runImage(image_url);
+const model = models['gpt'];
+// requestTest(model);
+// jsonTest(model);
+// streamTest(model);
+// imageTest(model, image_path);
+//fileTest(model, file_path);
